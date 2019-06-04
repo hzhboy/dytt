@@ -1,12 +1,13 @@
 # -*- coding:utf-8 -*-
 from multiprocessing import Pool
 import time
+import getpass
+import urllib2
+
 def getHtmlCode(url):
     # import urllib
     # htmlCode = urllib.urlopen(url).read()
     # return htmlCode
-
-    import urllib2
     try:
         htmlCode = ""
         headers = {'User_Agent':'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.63 Safari/537.36 Qiyu/2.1.1.2'}
@@ -47,7 +48,8 @@ def getDownloadUrl(url):
         # print "%s\n" %movUrl
 
         # 保存文件
-        file = open("C:\Users\wangzhe\Desktop\download list top400.txt", "a+")
+        filename = "C:/Users/" + getpass.getuser() + "/Desktop/1download list.txt"
+        file = open(filename, "a+")
         file.write("%s\n" % movUrl)
         file.close()
     else:
@@ -62,7 +64,7 @@ if __name__ == '__main__':
         print(URLlist[i])
         list = getDownloadList(URLlist[i])
         print list
-        pool = Pool(3)  # 创建拥有10个进程数量的进程池
+        pool = Pool(10)  # 创建拥有10个进程数量的进程池
         try:
             pool.map(getDownloadUrl, list)  # 处理列表中数据的函数,要处理的数据列表
             time.sleep(3)
