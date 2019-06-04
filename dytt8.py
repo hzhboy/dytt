@@ -32,7 +32,7 @@ def getDownloadUrl(url):
     #print "%s\n" %movUrl
 
     #保存文件
-    filename = "C:/Users/" + getpass.getuser() + "/Desktop/1download list.txt"
+    filename = "C:/Users/" + getpass.getuser() + "/Desktop/download list.txt"
     file = open(filename, "a+")
     file.write("%s\n"%movUrl)
     file.close()
