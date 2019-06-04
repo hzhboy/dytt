@@ -1,8 +1,9 @@
 # -*- coding:utf-8 -*-
 from multiprocessing import Pool
+import getpass
+import urllib
 
 def getHtmlCode(url):
-    import urllib
     htmlCode = urllib.urlopen(url).read()
     return htmlCode
 
@@ -31,22 +32,23 @@ def getDownloadUrl(url):
     #print "%s\n" %movUrl
 
     #保存文件
-    file = open("C:\Users\wangzhe\Desktop\download list.txt", "a+")
+    filename = "C:/Users/" + getpass.getuser() + "/Desktop/1download list.txt"
+    file = open(filename, "a+")
     file.write("%s\n"%movUrl)
     file.close()
 
 if __name__ == '__main__':
 
-    for i in range(1, 3):
+    for i in range(1, 2):
         url = "https://www.dytt8.net/html/gndy/dyzz/list_23_%d.html" % i
         print url
         list = getDownloadList(url)
-        # pool = Pool(10)  # 创建拥有10个进程数量的进程池
-        # pool.map(getDownloadUrl, list)# 处理列表中数据的函数,要处理的数据列表
-        # pool.close()  # 关闭进程池，不再接受新的进程
-        # pool.join()  # 主进程阻塞等待子进程的退出
-        for url in list:
-           getDownloadUrl(url)
-           print "%s : ok" % url
+        pool = Pool(10)  # 创建拥有10个进程数量的进程池
+        pool.map(getDownloadUrl, list)# 处理列表中数据的函数,要处理的数据列表
+        pool.close()  # 关闭进程池，不再接受新的进程
+        pool.join()  # 主进程阻塞等待子进程的退出
+        #for url in list:
+        #   getDownloadUrl(url)
+        #   print "%s : ok" % url
 
 #下载最新电影
